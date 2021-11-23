@@ -81,56 +81,27 @@ int main() {
 
     Kokkos::parallel_for("kokkosSpotsKernel", total_pixels, KOKKOS_LAMBDA(const int& pixIdx)
     {
-      const int fpixel = pixIdx % fpixels;
-      const int spixel = pixIdx / fpixels;
-
       CUDAREAL I = 0;
-
-      int subF = 0;
-      int subS = 0;
-      int oversample = 2;
-
-      CUDAREAL Fdet = subpixel_size * (fpixel * oversample + subF) + subpixel_size / 2.0;
-      CUDAREAL Sdet = subpixel_size * (spixel * oversample + subS) + subpixel_size / 2.0;
 
       int thick_tic;
       for (thick_tic = 0; thick_tic < detector_thicksteps; ++thick_tic)
       {
-        CUDAREAL Odet = thick_tic * detector_thickstep;
-        LOOK_INTO(Odet)
-
-        CUDAREAL pixel_pos[4];
-        pixel_pos[1] = Fdet * 1 + Sdet * 0 + Odet * 0;
-        pixel_pos[2] = Fdet * 0 + Sdet * 1 + Odet * 0;
-        pixel_pos[3] = Fdet * 0 + Sdet * 0 + Odet * 1;
-
-        CUDAREAL diffracted[4];
-        CUDAREAL airpath = unitize(pixel_pos, diffracted); LOOK_INTO(airpath);
 
         // now calculate detector thickness effects
         CUDAREAL capture_fraction = 1.0;
-        LOOK_INTO_INT(thick_tic)
-        LOOK_INTO(detector_thickstep)
         LOOK_INTO(detector_thick)
         LOOK_INTO(detector_mu)
         LOOK_INTO(capture_fraction)
         if (detector_thick > 0.0 && detector_mu> 0.0) {
-          // inverse of effective thickness increase
-          CUDAREAL odet[4];
-          odet[1] = odet_vector(1);
-          odet[2] = odet_vector(2);
-          odet[3] = odet_vector(3);
-          CUDAREAL parallax = dot_product(odet, diffracted);
-          LOOK_INTO(parallax)
-          capture_fraction = exp(-thick_tic * detector_thickstep / detector_mu / parallax)
-                           - exp(-(thick_tic + 1) * detector_thickstep / detector_mu / parallax);
+	  capture_fraction = 2;
+	  LOOK_INTO(capture_fraction)
         }
         LOOK_INTO(capture_fraction)
 
         I += capture_fraction;
       }
 
-      result(pixIdx) = I;
+      result(pixIdx) = I; LOOK_INTO(I)
 
     });
 
