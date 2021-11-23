@@ -21,6 +21,7 @@ int main() {
     float hrad_sqr = 1.0;
     double normal_name = 1.0;
 
+    printf("Inside main():\n");
     LOOK_INTO(capture_fraction)
     LOOK_INTO(hrad_sqr)
     LOOK_INTO(normal_name)
@@ -30,6 +31,7 @@ int main() {
     	double I = 0;
       double captur_efraction = 1.0;
       double useful_name = 1.0;
+      printf("\nInside parallel_for():\n");
       LOOK_INTO(capture_fraction)
       LOOK_INTO(hrad_sqr)
       LOOK_INTO(normal_name);
