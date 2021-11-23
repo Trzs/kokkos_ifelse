@@ -1,9 +1,7 @@
 #include <iostream>
-#include <iomanip>
 #include <Kokkos_Core.hpp>
 
-#define LOOK_INTO(var) if (pixIdx == 0) \
-        { printf("%d (%s): %.9E \n", __LINE__, #var, var); }
+#define LOOK_INTO(var) { printf("%d (%s): %.9E \n", __LINE__, #var, var); }
 
 int main() {
 
@@ -19,26 +17,28 @@ int main() {
     std::cout << "Using OpenMP" << std::endl;
 #endif
 
-    const int fpixels = 1536;
-    const int spixels = 1536;
-    const int total_pixels = 2;//fpixels * spixels;
-
     double capture_fraction = 1.0;
-    float hrad_sqr = 2.0;
+    float hrad_sqr = 1.0;
     double normal_name = 1.0;
 
-    Kokkos::parallel_for("kokkosSpotsKernel", total_pixels, KOKKOS_LAMBDA(const int& pixIdx)
+    LOOK_INTO(capture_fraction)
+    LOOK_INTO(hrad_sqr)
+    LOOK_INTO(normal_name)
+
+    Kokkos::parallel_for("kokkosSpotsKernel", 1, KOKKOS_LAMBDA(const int& pixIdx)
     {
-        double captur_efraction = 1.0;
-	double useful_name = 1.0;
-        LOOK_INTO(capture_fraction)
-	LOOK_INTO(hrad_sqr)
-	LOOK_INTO(normal_name);
-        LOOK_INTO(captur_efraction)
-	LOOK_INTO(useful_name)
-
+    	double I = 0;
+      double captur_efraction = 1.0;
+      double useful_name = 1.0;
+      LOOK_INTO(capture_fraction)
+      LOOK_INTO(hrad_sqr)
+      LOOK_INTO(normal_name);
+      LOOK_INTO(captur_efraction)
+      LOOK_INTO(useful_name)
+  
+      I = capture_fraction + hrad_sqr + normal_name + captur_efraction + useful_name;
+      LOOK_INTO(I)
     });
-
 
   }
   Kokkos::finalize();
