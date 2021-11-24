@@ -17,9 +17,9 @@ int main() {
     std::cout << "Using OpenMP" << std::endl;
 #endif
 
-    double capture_fraction = 1.0;
-    float hrad_sqr = 1.0;
-    double normal_name = 1.0;
+    double capture_fraction = 1.1;
+    float hrad_sqr = 1.01;
+    double normal_name = 1.001;
 
     printf("Inside main():\n");
     LOOK_INTO(capture_fraction)
@@ -29,8 +29,8 @@ int main() {
     Kokkos::parallel_for("kokkosSpotsKernel", 1, KOKKOS_LAMBDA(const int& pixIdx)
     {
     	double I = 0;
-      double captur_efraction = 1.0;
-      double useful_name = 1.0;
+      double captur_efraction = 1.0001;
+      double useful_name = 1.00001;
       printf("\nInside parallel_for():\n");
       LOOK_INTO(capture_fraction)
       LOOK_INTO(hrad_sqr)
