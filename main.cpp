@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Kokkos_Core.hpp>
 
-#define LOOK_INTO(var) { printf("%d (%s): %.9E \n", __LINE__, #var, var); }
+#define LOOK_INTO(var) printf("%d (%s): %.9E \n", __LINE__, #var, var)
 
 int main() {
 
@@ -22,9 +22,9 @@ int main() {
     double normal_name = 1.001;
 
     printf("Inside main():\n");
-    LOOK_INTO(capture_fraction)
-    LOOK_INTO(hrad_sqr)
-    LOOK_INTO(normal_name)
+    LOOK_INTO(capture_fraction);
+    LOOK_INTO(hrad_sqr);
+    LOOK_INTO(normal_name);
 
     Kokkos::parallel_for("kokkosSpotsKernel", 1, KOKKOS_LAMBDA(const int& pixIdx)
     {
@@ -32,14 +32,14 @@ int main() {
       double captur_efraction = 1.0001;
       double useful_name = 1.00001;
       printf("\nInside parallel_for():\n");
-      LOOK_INTO(capture_fraction)
-      LOOK_INTO(hrad_sqr)
+      LOOK_INTO(capture_fraction);
+      LOOK_INTO(hrad_sqr);
       LOOK_INTO(normal_name);
-      LOOK_INTO(captur_efraction)
-      LOOK_INTO(useful_name)
+      LOOK_INTO(captur_efraction);
+      LOOK_INTO(useful_name);
   
       I = capture_fraction + hrad_sqr + normal_name + captur_efraction + useful_name;
-      LOOK_INTO(I)
+      LOOK_INTO(I);
     });
 
   }
